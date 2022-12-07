@@ -14,11 +14,11 @@ public class Estudante {
     private String emailInstitucional;
     private List<Celular> celulars = new ArrayList<>();
 
-    public Estudante(String nome, String matricula, LocalDate dataNascimento, String endereco,
+    public Estudante(String nome, LocalDate dataNascimento, String endereco,
             String emailInstitucional, Celular numero){
             if(isValid(nome) || isValid(matricula) || isValid(endereco) || isValid(emailInstitucional)){
                 this.nome = nome;
-                this.matricula = matricula;
+                this.matricula = gerarMatricula();
                 this.dataNascimento = dataNascimento;
                 this.endereco = endereco;
                 this.emailInstitucional = emailInstitucional;

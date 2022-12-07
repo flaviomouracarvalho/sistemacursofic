@@ -37,4 +37,17 @@ public class Curso {
         }
 
     }
+
+    public List buscarTurmas(){
+        List<TurmaCurso> turmas = new ArrayList<>();
+        for(TurmaCurso turma: this.turmaCursos){
+            if(turma.matriculas.size()!=0){
+                turmas.add(turma);
+            } 
+        }
+        if(turmas.size()!=0){
+            return turmas;
+        }
+        throw new IllegalArgumentException("Turma vazia");
+    }
 }

@@ -6,23 +6,37 @@ import java.util.List;
 
 public class EstudantesMatriculados {
     private LocalDate dataMatricula;
-    private List<Estudante> estudantes = new ArrayList<>();
+    private String matricula;
+    private TurmaCurso turmaCurso;
 
 
-    public EstudantesMatriculados(String matricula, LocalDate dataMatricula) {
+    public EstudantesMatriculados(String matricula, LocalDate dataMatricula, TurmaCurso turmaCurso) {
+        turmaCurso.matriculas.add(matricula);
         this.dataMatricula = dataMatricula;
-    }
-    
-    public List getEstudantes(){
-        return this.estudantes;
+        this.turmaCurso = turmaCurso;
+        if(podeMatricular(dataMatricula)){
+            this.dataMatricula = dataMatricula;
+            this.matricula = matricula;
+        }
+        else{
+            throw new IllegalArgumentException("Não pode matricular");
+        }
+        diminuirVagas();
     }
 
-    public Estudante getEstudante(String matricula){
-        for(Estudante estudante: this.estudantes){
-            if(estudante.getMatricula() == matricula){
-                return estudante;
+    public boolean podeMatricular(LocalDate dataMatricula){
+        if(this.turmaCurso.getVagasDisponiveis() > 0){
+            if(dataMatricula.isAfter(turmaCurso.getPeriodoMatriculas().get(0)) && dataMatricula.isBefore(turmaCurso.getPeriodoMatriculas().get(1))){
+                return true;
+            }
+            else{
+                return false;
             }
         }
-        return null;
+        return false;
+    }
+
+    public void diminuirVagas(){
+        this.turmaCurso.setVagasDisponiveis(this.turmaCurso.getVagasDisponiveis()-1);
     }
 }
